@@ -16,7 +16,9 @@
 
       <button id="login">Log In</button><b></b>
       <p>Don't have an account. Create one</p>
-      <button id="signin">Sign In</button>
+      <router-link to="/signIn">
+        <button id="signin">Sign In</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -29,7 +31,8 @@ export default {};
 #universe_div {
   width: auto;
   height: 100vh;
-  background-image: url("../Images/LoginBackground.jpg");
+  background-image: url("../assets/LoginBackground.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -38,7 +41,6 @@ export default {};
 }
 
 #page {
-  border: 1px solid white;
   border-radius: 10px;
   height: 455px;
   width: 247px;
@@ -94,5 +96,9 @@ p {
 #signin:hover {
   cursor: pointer;
   background-color: rgb(47, 65, 135);
+}
+
+p {
+  align-self: center;
 }
 </style>

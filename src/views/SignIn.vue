@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div>
-      <h3>Vue 2 Chat App</h3>
-    </div>
+    <h1>signIn</h1>
   </div>
 </template>
 
