@@ -1,37 +1,62 @@
 <template>
-  <div
-    id="universe_div"
-    class="w-auto l fill-height d-flex justify-center align-center"
-  >
-    <div id="page">
-      <h2>Sign Up</h2>
-      <b></b>
+  <div id="universe_div" class="d-flex justify-center align-center">
+    <v-card
+      id="page"
+      class="d-flex flex-column justify-center pa-10"
+      dark
+      flat
+      height="500"
+    >
+      <h2 class="mb-4 white--text">Sign Up</h2>
+      <br />
 
-      <label for="username">Username</label>
-      <input class="input" type="text" placeholder="Enter your username" />
+      <v-text-field
+        v-model="username"
+        label="Username"
+        placeholder="Enter your username"
+        dense
+        class="mb-1"
+      />
 
-      <label for="username">Password</label>
-      <input
-        class="input"
-        type="text"
+      <v-text-field
+        v-model="password"
+        label="Password"
         placeholder="Enter your password"
-      /><b></b>
+        type="password"
+        dense
+        class="mb-4"
+      />
 
-      <button id="login">Sign Up</button><b></b>
-      <p>Already have an account.</p>
-      <router-link to="/login">
-        <button id="signin">Log In</button>
+      <router-link to="/signup" class="text-decoration-none mb-2">
+        <v-btn id="signup-btn" block> sign up </v-btn>
       </router-link>
-    </div>
+      <br />
+
+      <p class="text-center mb-3">Already have an account</p>
+
+      <router-link to="/login" class="text-decoration-none mb-2">
+        <v-btn id="signup-btn" block> log in </v-btn>
+      </router-link>
+    </v-card>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "LogIn",
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+};
 </script>
 
 <style scoped>
 #universe_div {
+  height: 100vh;
+  width: 100%;
   background-image: url("../assets/signup.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -40,63 +65,36 @@ export default {};
 
 #page {
   border-radius: 10px;
-  height: 455px;
-  width: 247px;
+  width: 387px;
   font-family: "Roboto", sans-serif;
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 0px 70px;
   color: white;
   background-color: rgba(30, 58, 138, 0.2);
   backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
 }
 
-input {
-  padding-left: 15px;
-}
-
-.input {
-  width: 15rem;
-  height: 1.75rem;
-  border: 1px solid white;
-  border-radius: 5px;
-}
-
-#login {
+#login-btn {
   background-color: rgb(10, 10, 141);
-  border: none;
   color: white;
-  width: 257px;
-  height: 30px;
-  border-radius: 5px;
+  border: none;
 }
 
-#login:hover {
-  cursor: pointer;
+#login-btn:hover {
   background-color: rgb(10, 10, 167);
 }
 
-p {
-  font-size: 0.8rem;
-}
-
-#signin {
+#signup-btn {
   background-color: rgb(22, 31, 68);
-  border: none;
   color: white;
-  width: 257px;
-  height: 30px;
-  border-radius: 5px;
+  border: none;
 }
 
-#signin:hover {
-  cursor: pointer;
+#signup-btn:hover {
   background-color: rgb(47, 65, 135);
 }
 
 p {
+  font-size: 0.8rem;
+  color: white;
   align-self: center;
 }
 </style>

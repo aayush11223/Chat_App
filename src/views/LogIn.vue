@@ -38,7 +38,7 @@
         <v-btn id="signup-btn" block> Sign Up </v-btn>
       </router-link>
 
-      <router-link to="/chatapp" class="text-decoration-none mt-2">
+      <router-link to="/chatpage" class="text-decoration-none mt-2">
         <v-btn block depressed dark> Chat App </v-btn>
       </router-link>
     </v-card>

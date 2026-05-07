@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from 'vue-router'
 import LogIn from "../views/LogIn.vue"
 import SignUp from "../views/SignUp.vue"
-import ChatApp from "../views/ChatApp.vue"
+import ChatPage from '../views/ChatPage.vue'
 
 
 
@@ -20,7 +20,7 @@ const routes =
             path: '/signup', component: SignUp
         },
         {
-            path: '/chatapp', component: ChatApp
+            path: '/chatpage', component: ChatPage
         }
     ]
 
