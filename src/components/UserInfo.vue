@@ -2,7 +2,7 @@
   <v-container
     fluid
     class="pa-0 ma-0 d-flex justify-center align-center"
-    style="height: 100vh"
+    style="height: 80vh"
   >
     <div class="d-flex flex-column align-center justify-center">
       <div class="mb-4">

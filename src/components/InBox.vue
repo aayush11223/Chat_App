@@ -1,6 +1,7 @@
 <template>
   <v-container fluid class="pa-0 ma-0" style="width: 100%">
     <v-card
+      flat
       class="mx-auto rounded-0 mb-10"
       style="
         border-bottom: 1px solid balck;
@@ -11,7 +12,12 @@
     >
       <div
         class="d-flex align-center"
-        style="height: 100%; padding: 0 12px; gap: 12px"
+        style="
+          height: 100%;
+          padding: 0 12px;
+          gap: 12px;
+          border-bottom: 1px solid #dcdcdc;
+        "
       >
         <v-avatar size="38">
           <v-img :src="users[0].profile" :alt="users[0].name" />
@@ -26,9 +32,9 @@
       </div>
     </v-card>
 
-    <v-main style="height: 80vh"> hello </v-main>
+    <v-main style="height: 60vh"> hello </v-main>
 
-    <v-footer style="border-top: 1px solid black; height: 85px">
+    <v-footer style="border-top: 1px solid black; height: none">
       <v-responsive max-width="80%">
         <v-text-field
           v-model="userInput"
@@ -36,12 +42,12 @@
           outlined
           dense
           hide-details
-          class="ml-8"
+          class="ml-8 mt-5"
         ></v-text-field>
       </v-responsive>
 
       <v-btn
-        class="ml-8"
+        class="ml-8 mt-5"
         fab
         style="border: 1px solid black; width: 40px; height: 40px"
       >

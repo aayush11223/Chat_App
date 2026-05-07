@@ -25,10 +25,10 @@
 
     <v-hover v-for="(user, index) in users" :key="index" v-slot="{ hover }">
       <v-card
-        class="mx-auto rounded-0"
-        :color="hover ? 'red' : 'white'"
+        flat
+        class="mx-auto rounded-0 border-bottom card"
+        :color="hover ? '#DCDCDC' : 'white'"
         style="
-          border-bottom: 1px solid black;
           width: 100%;
           height: 60px;
           cursor: pointer;
@@ -37,7 +37,12 @@
       >
         <div
           class="d-flex align-center"
-          style="height: 100%; padding: 0 12px; gap: 12px"
+          style="
+            height: 100%;
+            padding: 0 12px;
+            gap: 12px;
+            border-bottom: 1px solid #dcdcdc;
+          "
         >
           <v-avatar size="38">
             <v-img :src="user.profile" :alt="user.name" />
