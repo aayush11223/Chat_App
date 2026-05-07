@@ -4,7 +4,7 @@ export const users = [
     { id: 1, profile: url, name: "Gabriel Schwworhe", msg: "User Name1", designation: "Product Manager" },
     { id: 2, profile: url, name: "Clement Maxwell", msg: "User Name2", designation: "Sales Representative" },
     { id: 3, profile: url, name: "Panela Noble", msg: "User Name3", designation: "Business Analyst" },
-    { id: 4, profile: url, name: "Dominick Gonsalvis", msg: "User Name4", designation: "Human Resources (HR) Manager" },
+    { id: 4, profile: url, name: "Dominick Gonsalvis", msg: "User Name4", designation: "Human Resources" },
     { id: 5, profile: url, name: "Ziggy Part", msg: "User Name5", designation: "Marketing Manager" },
     { id: 6, profile: url, name: "Osmond Grant", msg: "User Name6", designation: "Senior Developer" }
 ]

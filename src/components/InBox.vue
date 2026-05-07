@@ -3,29 +3,19 @@
     <v-card
       flat
       class="mx-auto rounded-0 mb-10"
-      style="
-        border-bottom: 1px solid balck;
-        width: 100%;
-        height: 80px;
-        cursor: pointer;
-      "
+      style="width: 100%; height: 80px; cursor: pointer"
     >
       <div
-        class="d-flex align-center"
-        style="
-          height: 100%;
-          padding: 0 12px;
-          gap: 12px;
-          border-bottom: 1px solid #dcdcdc;
-        "
+        class="d-flex align-center px-3"
+        style="height: 100%; gap: 12px; border-bottom: 1px solid #dcdcdc"
       >
         <v-avatar size="38">
-          <v-img :src="users[0].profile" :alt="users[0].name" />
+          <v-img :src="selectedUser.profile" :alt="selectedUser.name" />
         </v-avatar>
 
         <div class="d-flex flex-column justify-center">
           <span style="font-size: 14px; font-weight: 600">{{
-            users[0].name
+            selectedUser.name
           }}</span>
           <span style="font-size: 12px; color: #888">Active Now</span>
         </div>
