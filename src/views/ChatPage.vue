@@ -9,17 +9,19 @@
             </div>
           </v-col>
 
-          <v-col cols="6">
+          <v-col :cols="showColumn ? 6 : 9">
             <div class="panel ma-3 rounded-lg">
-              <InBox :selectedUser="selectedUser" />
+              <InBox :selectedUser="selectedUser" @change-col="column" />
             </div>
           </v-col>
 
-          <v-col cols="3">
-            <div class="panel ma-3 rounded-lg">
-              <UserInfo :selectedUser="selectedUser" />
-            </div>
-          </v-col>
+          <template v-if="showColumn">
+            <v-col cols="3">
+              <div class="panel ma-3 rounded-lg">
+                <UserInfo :selectedUser="selectedUser" />
+              </div>
+            </v-col>
+          </template>
         </v-row>
       </v-container>
     </v-main>
@@ -36,6 +38,7 @@ export default {
     return {
       users: users,
       selectedUser: users[0],
+      showColumn: false,
     };
   },
   components: {
@@ -46,6 +49,9 @@ export default {
   methods: {
     selectUser(user) {
       this.selectedUser = user;
+    },
+    column() {
+      this.showColumn = true;
     },
   },
 };

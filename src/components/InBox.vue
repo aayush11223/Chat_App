@@ -9,7 +9,7 @@
         class="d-flex align-center px-3"
         style="height: 100%; gap: 12px; border-bottom: 1px solid #dcdcdc"
       >
-        <v-avatar size="38">
+        <v-avatar size="38" @click="$emit('change-col')">
           <v-img :src="selectedUser.profile" :alt="selectedUser.name" />
         </v-avatar>
 
