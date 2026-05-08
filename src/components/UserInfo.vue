@@ -7,16 +7,16 @@
     <div class="d-flex flex-column align-center justify-center">
       <div class="mb-4">
         <v-avatar size="80">
-          <v-img :src="users[0].profile" :alt="users[0].name" />
+          <v-img :src="selectedUser.profile" :alt="selectedUser.name" />
         </v-avatar>
       </div>
 
       <div class="d-flex flex-column align-center text-center">
         <span style="font-size: 20px; font-weight: 600">{{
-          users[0].name
+          selectedUser.name
         }}</span>
         <span style="font-size: 20px; color: #888">{{
-          users[0].designation
+          selectedUser.designation
         }}</span>
       </div>
     </div>
@@ -24,13 +24,9 @@
 </template>
 
 <script>
-import { users } from "../components/constants/name.js";
-
 export default {
-  data() {
-    return {
-      users: users,
-    };
+  props: {
+    selectedUser: Object,
   },
 };
 </script>

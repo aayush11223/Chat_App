@@ -25,6 +25,7 @@
 
     <v-hover v-for="(user, index) in users" :key="index" v-slot="{ hover }">
       <v-card
+        @click="$emit('select-user', user)"
         flat
         class="mx-auto rounded-0 border-bottom card"
         :color="hover ? '#DCDCDC' : 'white'"
@@ -32,7 +33,7 @@
           width: 100%;
           height: 60px;
           cursor: pointer;
-          transition: background-color 0.5s;
+          transition: background-color 0.3s;
         "
       >
         <div
@@ -63,16 +64,20 @@
 </template>
 
 <script>
-import { users } from "../components/constants/name.js";
-
 export default {
-  data() {
-    return {
-      users: users,
-    };
+  props: {
+    users: Array,
   },
 };
 </script>
 
 <style scoped>
+<<<<<<< HEAD
 </style>
+=======
+.box {
+  width: 100%;
+}
+</style>
+
+>>>>>>> fb54294 (changes seen)

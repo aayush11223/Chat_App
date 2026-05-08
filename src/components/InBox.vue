@@ -17,14 +17,18 @@
           <span style="font-size: 14px; font-weight: 600">{{
             selectedUser.name
           }}</span>
-          <span style="font-size: 12px; color: #888">Active Now</span>
+          <span style="font-size: 12px; color: #888"
+            >{{ selectedUser.designation }}
+          </span>
         </div>
       </div>
     </v-card>
 
     <v-main style="height: 60vh"> hello </v-main>
 
-    <v-footer style="border-top: 1px solid black; height: none">
+    <v-footer
+      style="border-top: 1px solid black; height: none; background-color: white"
+    >
       <v-responsive max-width="80%">
         <v-text-field
           v-model="userInput"
@@ -37,6 +41,7 @@
       </v-responsive>
 
       <v-btn
+        depressed
         class="ml-8 mt-5"
         fab
         style="border: 1px solid black; width: 40px; height: 40px"
@@ -48,13 +53,9 @@
 </template>
 
 <script>
-import { users } from "../components/constants/name.js";
-
 export default {
-  data() {
-    return {
-      users: users,
-    };
+  props: {
+    selectedUser: Object,
   },
 };
 </script>
