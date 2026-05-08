@@ -72,12 +72,10 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-</style>
-=======
 .box {
   width: 100%;
 }
 </style>
 
->>>>>>> fb54294 (changes seen)
+
+
