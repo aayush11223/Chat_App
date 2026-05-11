@@ -20,7 +20,7 @@ const routes =
             path: '/signup', component: SignUp
         },
         {
-            path: '/chatpage', component: ChatPage
+            path: '/chatpage/:id', component: ChatPage
         }
     ]
 

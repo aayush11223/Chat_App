@@ -25,7 +25,7 @@
 
     <v-hover v-for="(user, index) in users" :key="index" v-slot="{ hover }">
       <v-card
-        @click="$emit('select-user', user)"
+        @click="handleSelection(user)"
         flat
         class="mx-auto rounded-0 border-bottom card"
         :color="hover ? '#DCDCDC' : 'white'"
@@ -67,6 +67,13 @@
 export default {
   props: {
     users: Array,
+  },
+
+  methods: {
+    handleSelection(user) {
+      this.$emit("select-user", user);
+      this.$router.push(`/chatpage/${user.id}`);
+    },
   },
 };
 </script>

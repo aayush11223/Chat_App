@@ -3,21 +3,26 @@
     <v-main>
       <v-container fluid class="pa-0">
         <v-row no-gutters class="chat-layout">
-          <v-col cols="3">
+          <v-col cols="12" sm="4" md="3">
             <div class="panel ma-3 rounded-lg">
               <SideBar :users="users" @select-user="selectUser" />
             </div>
           </v-col>
 
-          <v-col :cols="showColumn ? 6 : 9">
+          <v-col cols="12" :sm="8" :md="showColumn ? 6 : 9">
             <div class="panel ma-3 rounded-lg">
               <InBox :selectedUser="selectedUser" @change-col="column" />
             </div>
           </v-col>
 
           <template v-if="showColumn">
-            <v-col cols="3">
+            <v-col cols="12" md="3">
               <div class="panel ma-3 rounded-lg">
+                <v-row justify="end" no-gutters>
+                  <v-btn color="error" height="30" icon @click="closeColumn">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </v-row>
                 <UserInfo :selectedUser="selectedUser" />
               </div>
             </v-col>
@@ -53,6 +58,9 @@ export default {
     column() {
       this.showColumn = true;
     },
+    closeColumn() {
+      this.showColumn = false;
+    },
   },
 };
 </script>
@@ -61,5 +69,6 @@ export default {
 .panel {
   min-height: 95vh;
   border: 1px solid black;
+  overflow: hidden;
 }
 </style>

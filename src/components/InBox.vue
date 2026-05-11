@@ -44,6 +44,7 @@
       </div>
     </v-main>
     <v-footer
+      class="d-flex align-center"
       style="border-top: 1px solid black; height: none; background-color: white"
     >
       <v-responsive max-width="80%">
