@@ -11,7 +11,11 @@
 
           <v-col cols="12" :sm="8" :md="showColumn ? 6 : 9">
             <div class="panel ma-3 rounded-lg">
-              <InBox :selectedUser="selectedUser" @change-col="column" />
+              <InBox
+                v-if="selectedUser"
+                :selectedUser="selectedUser"
+                @change-col="column"
+              />
             </div>
           </v-col>
 
@@ -34,10 +38,15 @@
 </template>
 
 <script>
+import axios from "axios";
 import SideBar from "../components/SideBar.vue";
 import InBox from "../components/InBox.vue";
 import UserInfo from "../components/UserInfo.vue";
+import { getToken, isLoggedIn } from "../auth";
 import { users } from "../components/constants/name.js";
+
+const API = "http://localhost:5000";
+
 export default {
   data() {
     return {
@@ -46,10 +55,26 @@ export default {
       showColumn: false,
     };
   },
+
   components: {
     SideBar,
     InBox,
     UserInfo,
+  },
+
+  async created() {
+    if (!isLoggedIn()) {
+      this.$router.push("/login");
+      return;
+    }
+    try {
+      const { data } = await axios.get(`${API}/api/session`, {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
+      console.log("Session data:", data); // see what comes back
+    } catch (err) {
+      this.$router.push("/login");
+    }
   },
   methods: {
     selectUser(user) {

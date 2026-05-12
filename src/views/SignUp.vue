@@ -23,15 +23,23 @@
 
       <v-text-field
         v-model="username"
-        label="Username"
+        autocomplete="off"
         placeholder="Enter your username"
         dense
         class="mb-1"
       />
 
       <v-text-field
+        v-model="email"
+        autocomplete="off"
+        placeholder="Enter your email"
+        dense
+        class="mb-1"
+      />
+
+      <v-text-field
         v-model="password"
-        label="Password"
+        autocomplete="new-password"
         placeholder="Enter your password"
         type="password"
         dense
@@ -45,7 +53,7 @@
           background-color: rgb(10, 10, 141);
           color: white;
           border: none;
-          height: 1px;
+          height: 25px;
           background-color: rgb(22, 31, 68);
           color: white;
           border: none;
@@ -87,33 +95,50 @@
 </template>
 
 <script>
+import axios from "axios";
+
+const API = "http://localhost:5000";
+
 export default {
   data() {
     return {
       username: "",
+      email: "",
       password: "",
+      loading: false,
     };
   },
-
   methods: {
-    signup() {
-      if (!this.username || !this.password) {
+    async signup() {
+      if (!this.username || !this.email || !this.password) {
         alert("Please fill all fields");
         return;
       }
-      const userData = {
-        username: this.username,
-        password: this.password,
-      };
-
-      localStorage.setItem("user", JSON.stringify(userData));
-
-      this.$router.push("/login");
+      this.loading = true;
+      try {
+        await axios.post(`${API}/api/auth/register`, {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        });
+        this.username = "";
+        this.email = "";
+        this.password = "";
+        this.$router.push("/login");
+      } catch (err) {
+        console.log("Full error:", err.response?.data);
+        const msg =
+          err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Registration failed";
+        alert(msg);
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
 </script>
-
 <style scoped>
 #universe_div {
   background-image: url("../assets/signup.jpg");

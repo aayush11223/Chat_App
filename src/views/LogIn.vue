@@ -23,7 +23,7 @@
 
       <v-text-field
         v-model="username"
-        label="Username"
+        autocomplete="off"
         placeholder="Enter your username"
         dense
         class="mb-1"
@@ -31,7 +31,7 @@
 
       <v-text-field
         v-model="password"
-        label="Password"
+        autocomplete="new-password"
         placeholder="Enter your password"
         type="password"
         dense
@@ -80,41 +80,49 @@
 </template>
 
 <script>
+import axios from "axios";
+import { setToken } from "../auth";
+
+const API = "http://localhost:5000";
+
 export default {
   name: "LogIn",
   data() {
     return {
       username: "",
       password: "",
+      loading: false,
     };
   },
-
   methods: {
-    login() {
+    async login() {
       if (!this.username || !this.password) {
         alert("Please fill all fields");
         return;
       }
-      const storedUser = JSON.parse(localStorage.getItem("user"));
+      this.loading = true;
+      try {
+        const { data } = await axios.post(`${API}/api/auth/login`, {
+          usernameOrEmail: this.username,
+          password: this.password,
+        });
 
-      if (
-        storedUser &&
-        this.username === storedUser.username &&
-        this.password === storedUser.password
-      ) {
-        localStorage.setItem("isLoggedIn", true);
-
-        if (localStorage.getItem("isLoggedIn")) {
-          this.$router.push("/chatpage/1");
-        }
-      } else {
-        alert("Invalid username or password");
+        console.log("Login response:", data);
+        setToken(data.token);
+        this.username = "";
+        this.password = "";
+        this.$router.push("/chatpage/1");
+      } catch (err) {
+        const msg =
+          err.response?.data?.message || "Invalid username or password";
+        alert(msg);
+      } finally {
+        this.loading = false;
       }
     },
   },
 };
 </script>
-
 <style scoped>
 #universe_div {
   background-image: url("../assets/LoginBackground.jpg");
