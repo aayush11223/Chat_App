@@ -27,7 +27,7 @@
       <v-card
         @click="handleSelection(user)"
         flat
-        class="mx-auto rounded-0 border-bottom card"
+        class="mx-auto rounded-0 border-bottom card overflow-y-auto"
         :color="hover ? '#DCDCDC' : 'white'"
         style="
           width: 100%;

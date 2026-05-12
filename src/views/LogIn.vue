@@ -1,6 +1,17 @@
 <template>
-  <div id="universe_div" class="d-flex justify-center align-center">
+  <div
+    id="universe_div"
+    class="d-flex justify-center align-center"
+    style="height: 100vh; width: 100%"
+  >
     <v-card
+      style="
+        border-radius: 10px;
+        width: 387px;
+        color: white;
+        background-color: rgba(30, 58, 138, 0.2);
+        backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
+      "
       id="page"
       class="d-flex flex-column justify-center pa-10"
       dark
@@ -27,19 +38,42 @@
         class="mb-4"
       />
 
-      <router-link to="/login" class="text-decoration-none mb-2">
-        <v-btn id="signup-btn" block> Log In </v-btn>
-      </router-link>
+      <v-btn
+        id="login-btn"
+        block
+        style="
+          background-color: rgb(10, 10, 141);
+          color: white;
+          border: none;
+          height: 1px;
+        "
+        @click="login"
+      >
+        Log In
+      </v-btn>
+
       <br />
 
-      <p class="text-center mb-3">Don't have an account? Create one</p>
+      <p
+        class="text-center mb-3"
+        style="font-size: 0.8rem; color: white; align-self: center"
+      >
+        Don't have an account? Create one
+      </p>
 
       <router-link to="/signup" class="text-decoration-none mb-2">
-        <v-btn id="signup-btn" block> Sign Up </v-btn>
-      </router-link>
-
-      <router-link to="/chatpage/:id" class="text-decoration-none mt-2">
-        <v-btn block depressed dark> Chat App </v-btn>
+        <v-btn
+          id="signup-btn"
+          block
+          style="
+            background-color: rgb(0, 31, 68);
+            color: white;
+            border: none;
+            height: 42px;
+          "
+        >
+          Sign Up
+        </v-btn>
       </router-link>
     </v-card>
   </div>
@@ -54,13 +88,35 @@ export default {
       password: "",
     };
   },
+
+  methods: {
+    login() {
+      if (!this.username || !this.password) {
+        alert("Please fill all fields");
+        return;
+      }
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (
+        storedUser &&
+        this.username === storedUser.username &&
+        this.password === storedUser.password
+      ) {
+        localStorage.setItem("isLoggedIn", true);
+
+        if (localStorage.getItem("isLoggedIn")) {
+          this.$router.push("/chatpage/1");
+        }
+      } else {
+        alert("Invalid username or password");
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
 #universe_div {
-  height: 100vh;
-  width: 100%;
   background-image: url("../assets/LoginBackground.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -68,37 +124,6 @@ export default {
 }
 
 #page {
-  border-radius: 10px;
-  width: 387px;
   font-family: "Roboto", sans-serif;
-  color: white;
-  background-color: rgba(30, 58, 138, 0.2);
-  backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
-}
-
-#login-btn {
-  background-color: rgb(10, 10, 141);
-  color: white;
-  border: none;
-}
-
-#login-btn:hover {
-  background-color: rgb(10, 10, 167);
-}
-
-#signup-btn {
-  background-color: rgb(22, 31, 68);
-  color: white;
-  border: none;
-}
-
-#signup-btn:hover {
-  background-color: rgb(47, 65, 135);
-}
-
-p {
-  font-size: 0.8rem;
-  color: white;
-  align-self: center;
 }
 </style>

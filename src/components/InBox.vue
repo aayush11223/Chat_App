@@ -25,11 +25,7 @@
     </v-card>
 
     <v-main style="height: 60vh; overflow-y: auto">
-      <div
-        v-for="(message, index) in messages"
-        :key="index"
-        class="d-flex justify-end pa-3"
-      >
+      <div class="d-flex justify-end pa-3">
         <div
           class="py-3 px-3"
           style="
@@ -39,10 +35,11 @@
             max-width: 300px;
           "
         >
-          {{ message.text }}
+          {{ selectedUser.conversations }}
         </div>
       </div>
     </v-main>
+
     <v-footer
       class="d-flex align-center"
       style="border-top: 1px solid black; height: none; background-color: white"
@@ -77,7 +74,6 @@ export default {
   data() {
     return {
       userInput: "",
-      messages: [],
     };
   },
 
@@ -87,12 +83,6 @@ export default {
 
   methods: {
     sendMessage() {
-      if (!this.userInput.trim()) return;
-
-      this.messages.push({
-        text: this.userInput,
-      });
-
       this.userInput = "";
     },
   },
