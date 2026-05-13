@@ -71,7 +71,7 @@ export default {
       const { data } = await axios.get(`${API}/api/session`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
-      console.log("Session data:", data); // see what comes back
+      console.log("Session data:", data);
     } catch (err) {
       this.$router.push("/login");
     }

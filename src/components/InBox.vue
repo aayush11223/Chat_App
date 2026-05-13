@@ -25,7 +25,21 @@
     </v-card>
 
     <v-main style="height: 60vh; overflow-y: auto">
-      <div class="d-flex justify-end pa-3">
+      <div class="d-flex justify-start pa-3">
+        <div
+          class="py-3 px-3"
+          style="
+            background: #555555;
+            color: white;
+            border-radius: 12px;
+            max-width: 300px;
+          "
+        >
+          {{ selectedUser.conversations }}
+        </div>
+      </div>
+
+      <div class="d-flex justify-end pa-3 mt-7 mb-7">
         <div
           class="py-3 px-3"
           style="
@@ -35,7 +49,7 @@
             max-width: 300px;
           "
         >
-          {{ selectedUser.conversations }}
+          {{ selectedUser.reply }}
         </div>
       </div>
     </v-main>

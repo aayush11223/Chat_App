@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height fluid class="pa-0">
-    <div class="box" style="height: 30vh; border-bottom: 1px solid black">
+    <div style="height: 30vh; width: 100%; border-bottom: 1px solid black">
       <div class="pt-3 pl-3 d-flex">
         <v-avatar size="38">
           <v-icon
@@ -37,13 +37,8 @@
         "
       >
         <div
-          class="d-flex align-center"
-          style="
-            height: 100%;
-            padding: 0 12px;
-            gap: 12px;
-            border-bottom: 1px solid #dcdcdc;
-          "
+          class="d-flex align-center py-0 px-3"
+          style="height: 100%; gap: 12px; border-bottom: 1px solid #dcdcdc"
         >
           <v-avatar size="38">
             <v-img :src="user.profile" :alt="user.name" />
@@ -79,9 +74,6 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  width: 100%;
-}
 </style>
 
 
