@@ -42,7 +42,7 @@ import axios from "axios";
 import SideBar from "../components/SideBar.vue";
 import InBox from "../components/InBox.vue";
 import UserInfo from "../components/UserInfo.vue";
-import { getToken, isLoggedIn } from "../utilities/auth.js";
+import { getToken, isLoggedIn } from "../utilities/token.js";
 import { users } from "../components/constants/name.js";
 
 const API = process.env.VUE_APP_LINK;
