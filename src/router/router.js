@@ -5,7 +5,6 @@ import LogIn from '../views/LogIn.vue';
 import SignUp from '../views/SignUp.vue';
 import ChatPage from '../views/ChatPage.vue';
 
-import auth from '../middleware/auth';
 
 Vue.use(VueRouter);
 
@@ -40,8 +39,6 @@ const router = new VueRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
-    auth({ next, to });
-});
+
 
 export default router;
