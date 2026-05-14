@@ -1,15 +1,17 @@
+import Cookies from 'js-cookie';
+
 export function setToken(token) {
-    localStorage.setItem("token", token);
+    Cookies.set('token', token, { expires: 7, path: '/' });
 }
 
 export function getToken() {
-    return localStorage.getItem("token");
+    return Cookies.get('token');
 }
 
 export function clearToken() {
-    localStorage.removeItem("token");
+    Cookies.remove('token', { path: '/' });
 }
 
 export function isLoggedIn() {
-    return !!localStorage.getItem("token");
+    return !!Cookies.get('token');
 }
