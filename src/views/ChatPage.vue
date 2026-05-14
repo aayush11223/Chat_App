@@ -45,8 +45,7 @@ import UserInfo from "../components/UserInfo.vue";
 import { getToken, isLoggedIn } from "../auth";
 import { users } from "../components/constants/name.js";
 
-const API = "http://localhost:5000";
-
+const API = process.env.VUE_APP_LINK;
 export default {
   data() {
     return {

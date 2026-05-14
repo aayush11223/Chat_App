@@ -1,18 +1,15 @@
-// src/auth.js
-let token = null;
-
-export function setToken(t) {
-    token = t;
+export function setToken(token) {
+    localStorage.setItem("token", token);
 }
 
 export function getToken() {
-    return token;
+    return localStorage.getItem("token");
 }
 
 export function clearToken() {
-    token = null;
+    localStorage.removeItem("token");
 }
 
 export function isLoggedIn() {
-    return !!token;
+    return !!localStorage.getItem("token");
 }

@@ -2,7 +2,7 @@
   <v-container
     fluid
     class="pa-0 ma-0 d-flex flex-column"
-    style="height: 100vh; width: 100%"
+    style="height: 90vh; width: 100%"
   >
     <v-card
       flat
@@ -55,6 +55,7 @@
     >
       <v-responsive max-width="80%">
         <v-text-field
+          class="ml-16 mt-7"
           @keypress.enter="sendMessage"
           v-model="userInput"
           placeholder="Type something..."
@@ -67,7 +68,7 @@
       <v-btn
         @click="sendMessage"
         depressed
-        class="ml-4"
+        class="ml-12 mt-6"
         fab
         style="border: 1px solid black; width: 40px; height: 40px"
       >
@@ -79,8 +80,6 @@
 
 <script>
 export default {
-  name: "ChatComponent",
-
   props: {
     selectedUser: {
       type: Object,

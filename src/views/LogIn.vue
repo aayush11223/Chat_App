@@ -83,7 +83,7 @@
 import axios from "axios";
 import { setToken } from "../auth";
 
-const API = "http://localhost:5000";
+const API = process.env.VUE_APP_LINK;
 
 export default {
   name: "LogIn",
