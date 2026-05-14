@@ -81,7 +81,7 @@
 
 <script>
 import axios from "axios";
-import { setToken } from "../auth";
+import { setToken } from "../utilities/auth.js";
 
 const API = process.env.VUE_APP_LINK;
 

@@ -1,14 +1,25 @@
 <template>
   <v-container fill-height fluid class="pa-0">
     <div style="height: 30vh; width: 100%; border-bottom: 1px solid black">
-      <div class="pt-3 pl-3 d-flex">
-        <v-avatar size="38">
-          <v-icon
-            class="fa-regular fa-circle-user pt-1 font-weight-bold"
-            size="32"
-          ></v-icon>
-        </v-avatar>
-        <h3 class="pt-2 pl-3">Chat</h3>
+      <div class="d-flex justify-space-between">
+        <div class="pt-3 pl-3 d-flex">
+          <v-avatar size="38">
+            <v-icon
+              class="fa-regular fa-circle-user pt-1 font-weight-bold"
+              size="32"
+            ></v-icon>
+          </v-avatar>
+          <h3 class="pt-2 pl-3">Chat</h3>
+        </div>
+        <router-link to="/login"
+          ><v-btn
+            depressed
+            color="#C27E79"
+            class="mt-3 mr-3"
+            style="width: 80px"
+            >Log Out</v-btn
+          ></router-link
+        >
       </div>
 
       <div class="mt-6 d-flex ml-4 mr-4">

@@ -17,13 +17,19 @@
           <v-img :src="selectedUser?.profile" :alt="selectedUser.name" />
         </v-avatar>
 
-        <div class="d-flex flex-column justify-center">
-          <span style="font-size: 14px; font-weight: 600">{{
-            selectedUser?.name
-          }}</span>
-          <span style="font-size: 12px; color: #888">{{
-            selectedUser?.designation
-          }}</span>
+        <div
+          class="d-flex justify-space-between align-center"
+          style="width: 100%"
+        >
+          <div class="d-flex flex-column justify-center">
+            <span style="font-size: 14px; font-weight: 600">
+              {{ selectedUser?.name }}
+            </span>
+
+            <span style="font-size: 12px; color: #888">
+              {{ selectedUser?.designation }}
+            </span>
+          </div>
         </div>
       </div>
     </v-card>
