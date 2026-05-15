@@ -3,23 +3,23 @@
     <v-main>
       <v-container fluid class="pa-0">
         <v-row no-gutters class="chat-layout">
-          <v-col cols="12" sm="4" md="3">
+          <v-col
+            cols="12"
+            :sm="selectedUser ? 4 : 12"
+            :md="selectedUser ? 3 : 12"
+          >
             <div class="panel ma-3 rounded-lg">
               <SideBar :users="users" @select-user="selectUser" />
             </div>
           </v-col>
 
-          <v-col cols="12" :sm="8" :md="showColumn ? 6 : 9">
+          <v-col v-if="selectedUser" cols="12" :sm="8" :md="showColumn ? 6 : 9">
             <div class="panel ma-3 rounded-lg">
-              <InBox
-                v-if="selectedUser"
-                :selectedUser="selectedUser"
-                @change-col="column"
-              />
+              <InBox :selectedUser="selectedUser" @change-col="column" />
             </div>
           </v-col>
 
-          <template v-if="showColumn">
+          <template v-if="selectedUser && showColumn">
             <v-col cols="12" md="3">
               <div class="panel ma-3 rounded-lg">
                 <v-row justify="end" no-gutters>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       users: users,
-      selectedUser: users[0],
+      selectedUser: null,
       showColumn: false,
     };
   },

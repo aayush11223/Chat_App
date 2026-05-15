@@ -111,7 +111,7 @@ export default {
         setToken(data.token);
         this.username = "";
         this.password = "";
-        this.$router.push("/chatpage/1");
+        this.$router.push("/chatpage/");
       } catch (err) {
         const msg =
           err.response?.data?.message || "Invalid username or password";

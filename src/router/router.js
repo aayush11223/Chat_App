@@ -22,7 +22,7 @@ const routes = [
         meta: { requiresGuest: true }
     },
     {
-        path: '/chatpage/:id',
+        path: '/chatpage/:id?',
         name: 'chatpage',
         component: ChatPage,
         meta: { requiresAuth: true }
@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
 
 
     if (to.matched.some(record => record.meta.requiresGuest) && authenticated) {
-        next('/chatpage/1');
+        next('/chatpage/');
     }
     else if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
         next('/login');
