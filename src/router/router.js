@@ -1,31 +1,26 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
 import LogIn from '../views/LogIn.vue';
 import SignUp from '../views/SignUp.vue';
 import ChatPage from '../views/ChatPage.vue';
-
+import { isLoggedIn } from '../utilities/token.js';
 
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        redirect: '/login'
-    },
-
+    { path: '/', redirect: '/login' },
     {
         path: '/login',
         name: 'login',
-        component: LogIn
+        component: LogIn,
+        meta: { requiresGuest: true }
     },
-
     {
         path: '/signup',
         name: 'signup',
-        component: SignUp
+        component: SignUp,
+        meta: { requiresGuest: true }
     },
-
     {
         path: '/chatpage/:id',
         name: 'chatpage',
@@ -39,6 +34,19 @@ const router = new VueRouter({
     routes
 });
 
+router.beforeEach((to, from, next) => {
+    const authenticated = isLoggedIn();
 
+
+    if (to.matched.some(record => record.meta.requiresGuest) && authenticated) {
+        next('/chatpage/1');
+    }
+    else if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
+        next('/login');
+    }
+    else {
+        next();
+    }
+});
 
 export default router;

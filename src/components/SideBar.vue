@@ -11,15 +11,15 @@
           </v-avatar>
           <h3 class="pt-2 pl-3">Chat</h3>
         </div>
-        <router-link to="/login"
-          ><v-btn
-            depressed
-            color="#C27E79"
-            class="mt-3 mr-3"
-            style="width: 80px"
-            >Log Out</v-btn
-          ></router-link
+        <v-btn
+          depressed
+          color="#C27E79"
+          class="mt-3 mr-3"
+          style="width: 80px"
+          @click="logout"
         >
+          Log Out
+        </v-btn>
       </div>
 
       <div class="mt-6 d-flex ml-4 mr-4">
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { clearToken } from "../utilities/token.js";
 export default {
   props: {
     users: Array,
@@ -79,6 +80,10 @@ export default {
     handleSelection(user) {
       this.$emit("select-user", user);
       this.$router.push(`/chatpage/${user.id}`);
+    },
+    logout() {
+      clearToken();
+      this.$router.replace("/login").catch(() => {});
     },
   },
 };
