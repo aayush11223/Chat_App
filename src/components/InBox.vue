@@ -39,12 +39,14 @@
         v-for="(msg, index) in messages"
         :key="index"
         :class="[
-          'message-row',
           msg.senderId === currentUserId ? 'justify-end' : 'justify-start',
           'd-flex pa-3',
         ]"
       >
-        <div class="message-bubble">
+        <div
+          class="message-bubble py-2 px-3 my-1 mx-3"
+          style="border-radius: 8px; max-width: 60%"
+        >
           {{ msg.text }}
         </div>
       </div>
@@ -120,24 +122,12 @@ export default {
 </script>
 
 <style scoped>
-.message-row {
-  display: flex;
-  width: 100%;
-}
-
 .justify-end {
   justify-content: flex-end;
 }
 
 .justify-start {
   justify-content: flex-start;
-}
-
-.message-bubble {
-  padding: 8px 12px;
-  border-radius: 8px;
-  max-width: 60%;
-  margin: 4px 12px;
 }
 
 .justify-end .message-bubble {
