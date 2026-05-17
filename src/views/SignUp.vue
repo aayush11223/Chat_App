@@ -95,10 +95,10 @@
 </template>
 
 <script>
+import { setToken } from "../utilities/token.js";
 import axios from "axios";
 
 const API = process.env.VUE_APP_LINK;
-
 export default {
   data() {
     return {
@@ -114,23 +114,33 @@ export default {
         alert("Please fill all fields");
         return;
       }
+
       this.loading = true;
+
       try {
-        await axios.post(`${API}/api/auth/register`, {
+        const { data } = await axios.post(`${API}/api/auth/register`, {
           username: this.username,
           email: this.email,
           password: this.password,
         });
+
+        // IMPORTANT: auto login after signup
+        if (data.token) {
+          setToken(data.token);
+        }
+
         this.username = "";
         this.email = "";
         this.password = "";
-        this.$router.push("/login");
+
+        this.$router.push("/chatpage");
       } catch (err) {
-        console.log("Full error:", err.response?.data);
         const msg =
           err.response?.data?.error ||
           err.response?.data?.message ||
+          JSON.stringify(err.response?.data) ||
           "Registration failed";
+
         alert(msg);
       } finally {
         this.loading = false;

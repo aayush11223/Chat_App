@@ -100,21 +100,27 @@ export default {
         alert("Please fill all fields");
         return;
       }
+
       this.loading = true;
+
       try {
         const { data } = await axios.post(`${API}/api/auth/login`, {
           usernameOrEmail: this.username,
           password: this.password,
         });
 
-        console.log("Login response:", data);
         setToken(data.token);
+
         this.username = "";
         this.password = "";
-        this.$router.push("/chatpage/");
+
+        this.$router.push("/chatpage");
       } catch (err) {
         const msg =
-          err.response?.data?.message || "Invalid username or password";
+          err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Invalid username or password";
+
         alert(msg);
       } finally {
         this.loading = false;

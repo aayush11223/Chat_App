@@ -43,14 +43,13 @@ import SideBar from "../components/SideBar.vue";
 import InBox from "../components/InBox.vue";
 import UserInfo from "../components/UserInfo.vue";
 import { getToken, isLoggedIn } from "../utilities/token.js";
-import { users } from "../components/constants/name.js";
 
 const API = process.env.VUE_APP_LINK;
 
 export default {
   data() {
     return {
-      users: users,
+      users: [],
       selectedUser: null,
       showColumn: false,
     };
@@ -72,6 +71,21 @@ export default {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
       console.log("Session data:", data);
+
+      const usersResponse = await axios.get(`${API}/api/users`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+
+      this.users = usersResponse.data.users.map((user) => ({
+        id: user.id,
+        name: user.username,
+        msg: user.email,
+        designation: "User",
+        profile:
+          "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bc01c83c3da0425e9baa6c7a9204af81",
+      }));
     } catch (err) {
       this.$router.push("/login");
     }

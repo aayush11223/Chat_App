@@ -1,52 +1,56 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import LogIn from '../views/LogIn.vue';
-import SignUp from '../views/SignUp.vue';
-import ChatPage from '../views/ChatPage.vue';
-import { isLoggedIn } from '../utilities/token.js';
+import Vue from "vue";
+import VueRouter from "vue-router";
+
+import LogIn from "../views/LogIn.vue";
+import SignUp from "../views/SignUp.vue";
+import ChatPage from "../views/ChatPage.vue";
+
+import { isLoggedIn } from "../utilities/token.js";
 
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/', redirect: '/login' },
+    { path: "/", redirect: "/login" },
+
     {
-        path: '/login',
-        name: 'login',
+        path: "/login",
+        name: "login",
         component: LogIn,
-        meta: { requiresGuest: true }
+        meta: { requiresGuest: true },
     },
+
     {
-        path: '/signup',
-        name: 'signup',
+        path: "/signup",
+        name: "signup",
         component: SignUp,
-        meta: { requiresGuest: true }
+        meta: { requiresGuest: true },
     },
+
     {
-        path: '/chatpage/:id?',
-        name: 'chatpage',
+        path: "/chatpage/:id?",
+        name: "chatpage",
         component: ChatPage,
-        meta: { requiresAuth: true }
-    }
+        meta: { requiresAuth: true },
+    },
 ];
 
 const router = new VueRouter({
-    mode: 'history',
-    routes
+    mode: "history",
+    routes,
 });
 
 router.beforeEach((to, from, next) => {
-    const authenticated = isLoggedIn();
+    const loggedIn = isLoggedIn();
 
+    if (to.meta.requiresAuth && !loggedIn) {
+        return next("/login");
+    }
 
-    if (to.matched.some(record => record.meta.requiresGuest) && authenticated) {
-        next('/chatpage/');
+    if (to.meta.requiresGuest && loggedIn) {
+        return next("/chatpage");
     }
-    else if (to.matched.some(record => record.meta.requiresAuth) && !authenticated) {
-        next('/login');
-    }
-    else {
-        next();
-    }
+
+    next();
 });
 
 export default router;
