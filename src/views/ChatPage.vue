@@ -1,14 +1,14 @@
 <template>
   <v-app>
     <v-main>
-      <v-container fluid class="pa-0">
+      <v-container fill-height fluid class="pa-0">
         <v-row no-gutters class="chat-layout">
           <v-col
             cols="12"
             :sm="selectedUser ? 4 : 12"
             :md="selectedUser ? 3 : 12"
           >
-            <div class="panel ma-3 rounded-lg">
+            <div class="sidebar-panel ma-3 rounded-lg">
               <SideBar :users="users" @select-user="selectUser" />
             </div>
           </v-col>
@@ -109,5 +109,12 @@ export default {
   min-height: 95vh;
   border: 1px solid black;
   overflow: hidden;
+}
+
+.sidebar-panel {
+  height: 95vh; /* ← fixed height, not min-height */
+  border: 1px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
