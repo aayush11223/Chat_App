@@ -112,7 +112,7 @@ export default {
 }
 
 .sidebar-panel {
-  height: 95vh; /* ← fixed height, not min-height */
+  height: 95vh; 
   border: 1px solid black;
   overflow-y: auto;
   overflow-x: hidden;
