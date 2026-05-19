@@ -4,54 +4,65 @@
     class="pa-0 ma-0 d-flex flex-column"
     style="height: 90vh; width: 100%"
   >
+    <!-- Header -->
     <v-card
       flat
       class="mx-auto rounded-0"
-      style="width: 100%; height: 80px; cursor: pointer; flex-shrink: 0"
+      style="width: 100%; height: 80px; flex-shrink: 0"
     >
       <div
         class="d-flex align-center px-3"
         style="height: 100%; gap: 12px; border-bottom: 1px solid #dcdcdc"
       >
         <v-avatar size="38" @click="$emit('change-col')">
-          <v-img :src="selectedUser?.profile" :alt="selectedUser.name" />
+          <v-img :src="selectedUser.profile" :alt="selectedUser.name" />
         </v-avatar>
-
-        <div
-          class="d-flex justify-space-between align-center"
-          style="width: 100%"
-        >
-          <div class="d-flex flex-column justify-center">
-            <span style="font-size: 14px; font-weight: 600">
-              {{ selectedUser?.name }}
-            </span>
-
-            <span style="font-size: 12px; color: #888">
-              {{ selectedUser?.designation }}
-            </span>
-          </div>
+        <div class="d-flex flex-column justify-center">
+          <span style="font-size: 14px; font-weight: 600">{{
+            selectedUser.name
+          }}</span>
+          <span style="font-size: 12px; color: #888">{{
+            selectedUser.designation
+          }}</span>
         </div>
       </div>
     </v-card>
 
-    <div style="height: 60vh; overflow-y: auto" class="pa-0 flex-grow-1">
+    <!-- Messages -->
+    <div
+      ref="messageContainer"
+      style="overflow-y: auto; flex-grow: 1"
+      class="pa-0"
+    >
+      <div
+        v-if="loading"
+        class="d-flex justify-center align-center"
+        style="height: 100%"
+      >
+        <v-progress-circular indeterminate color="primary" />
+      </div>
+
       <div
         v-for="(msg, index) in messages"
-        :key="index"
+        :key="msg.id || index"
         :class="[
-          msg.senderId === currentUserId ? 'justify-end' : 'justify-start',
+          msg.senderId === currentUser.id ? 'justify-end' : 'justify-start',
           'd-flex pa-3',
         ]"
       >
         <div
           class="message-bubble py-2 px-3 my-1 mx-3"
           style="border-radius: 8px; max-width: 60%"
+          :class="
+            msg.senderId === currentUser.id ? 'bubble-sent' : 'bubble-received'
+          "
         >
           {{ msg.text }}
         </div>
       </div>
     </div>
 
+    <!-- Input -->
     <v-footer
       class="d-flex align-center px-4"
       style="
@@ -70,9 +81,8 @@
           outlined
           dense
           hide-details
-        ></v-text-field>
+        />
       </v-responsive>
-
       <v-btn
         @click="sendMessage"
         depressed
@@ -87,57 +97,166 @@
 </template>
 
 <script>
+import axios from "axios";
+import { getSocket } from "../utilities/socket.js";
+import { getToken } from "../utilities/token.js";
+
+const API = process.env.VUE_APP_LINK;
+
 export default {
   props: {
     selectedUser: {
       type: Object,
       default: () => ({ name: "", designation: "", profile: "" }),
     },
+    currentUser: {
+      type: Object,
+      default: () => ({ id: "", username: "" }),
+    },
   },
 
   data() {
     return {
       userInput: "",
-      currentUserId: 1,
-      messages: [
-        { text: "Hello", senderId: 2 },
-        { text: "Hi there!", senderId: 1 },
-      ],
+      messages: [],
+      conversationId: null,
+      loading: false,
     };
   },
 
+  watch: {
+    // When user selects a different person, reload everything
+    "selectedUser.id": {
+      immediate: true,
+      async handler(newId) {
+        if (!newId || !this.currentUser?.id) return;
+        await this.initConversation();
+      },
+    },
+    "currentUser.id"(newId) {
+      if (!newId || !this.selectedUser?.id) return;
+      this.initConversation();
+    },
+  },
+
+  mounted() {
+    this.listenForMessages();
+  },
+
+  beforeDestroy() {
+    // Remove this component's listener (not disconnect — socket is shared)
+    const socket = getSocket();
+    socket.off("chat message", this.onIncomingMessage);
+  },
+
   methods: {
-    sendMessage() {
-      if (!this.userInput.trim()) return;
+    async initConversation() {
+      this.loading = true;
+      this.messages = [];
+      this.conversationId = null;
+
+      try {
+        // 1. Create or get existing conversation
+        const { data } = await axios.post(
+          `${API}/api/conversation`,
+          { userId: this.currentUser.id, messengerId: this.selectedUser.id },
+          { headers: { Authorization: `Bearer ${getToken()}` } }
+        );
+        this.conversationId = data.conversation.id;
+
+        // 2. Load existing messages
+        await this.loadMessages();
+      } catch (err) {
+        console.error("Failed to init conversation:", err);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async loadMessages() {
+      if (!this.conversationId) return;
+      try {
+        const { data } = await axios.get(
+          `${API}/api/conversation/chat/${this.conversationId}`,
+          { headers: { Authorization: `Bearer ${getToken()}` } }
+        );
+        this.messages = data.messages.map((m) => ({
+          id: m.id,
+          text: m.content,
+          senderId: m.senderId || m.sender?.id,
+        }));
+        this.$nextTick(() => this.scrollToBottom());
+      } catch (err) {
+        console.error("Failed to load messages:", err);
+      }
+    },
+
+    listenForMessages() {
+      const socket = getSocket();
+      socket.on("chat message", this.onIncomingMessage);
+    },
+
+    onIncomingMessage(payload) {
+      // Only handle if it belongs to the current open conversation
+      if (payload.conversationId !== this.conversationId) return;
+
+      // Avoid duplicate: socket also echoes back to sender
+      const alreadyExists = this.messages.some(
+        (m) =>
+          m.id === payload.id || (payload.tempId && m.tempId === payload.tempId)
+      );
+      if (alreadyExists) return;
 
       this.messages.push({
+        id: payload.id,
+        text: payload.content,
+        senderId: payload.sender.id,
+        tempId: payload.tempId,
+      });
+      this.$nextTick(() => this.scrollToBottom());
+    },
+
+    sendMessage() {
+      if (!this.userInput.trim() || !this.conversationId) return;
+
+      const tempId = `temp-${Date.now()}`;
+      const socket = getSocket();
+
+      // Optimistic UI — show immediately
+      this.messages.push({
+        id: tempId,
+        tempId,
         text: this.userInput,
-        senderId: this.currentUserId,
+        senderId: this.currentUser.id,
+      });
+
+      socket.emit("chat message", {
+        content: this.userInput,
+        conversationId: this.conversationId,
+        receiverId: this.selectedUser.id,
+        tempId,
       });
 
       this.userInput = "";
+      this.$nextTick(() => this.scrollToBottom());
+    },
+
+    scrollToBottom() {
+      const el = this.$refs.messageContainer;
+      if (el) el.scrollTop = el.scrollHeight;
     },
   },
 };
 </script>
 
-<style scoped>
-.justify-end {
-  justify-content: flex-end;
-}
-
-.justify-start {
-  justify-content: flex-start;
-}
-
-.justify-end .message-bubble {
+   <style scoped>
+.bubble-sent {
   background-color: #d1e7dd;
-  border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0 !important;
 }
-
-.justify-start .message-bubble {
+.bubble-received {
   background-color: #f8f9fa;
-  border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0 !important;
   border: 1px solid #e0e0e0;
 }
 </style>

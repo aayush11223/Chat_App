@@ -15,7 +15,11 @@
 
           <v-col v-if="selectedUser" cols="12" :sm="8" :md="showColumn ? 6 : 9">
             <div class="panel ma-3 rounded-lg">
-              <InBox :selectedUser="selectedUser" @change-col="column" />
+              <InBox
+                :selectedUser="selectedUser"
+                :currentUser="currentUser"
+                @change-col="column"
+              />
             </div>
           </v-col>
 
@@ -43,22 +47,20 @@ import SideBar from "../components/SideBar.vue";
 import InBox from "../components/InBox.vue";
 import UserInfo from "../components/UserInfo.vue";
 import { getToken, isLoggedIn } from "../utilities/token.js";
+import { getSocket } from "../utilities/socket.js";
 
 const API = process.env.VUE_APP_LINK;
 
 export default {
+  components: { SideBar, InBox, UserInfo },
+
   data() {
     return {
       users: [],
       selectedUser: null,
       showColumn: false,
+      currentUser: null,
     };
-  },
-
-  components: {
-    SideBar,
-    InBox,
-    UserInfo,
   },
 
   async created() {
@@ -67,29 +69,31 @@ export default {
       return;
     }
     try {
-      const { data } = await axios.get(`${API}/api/session`, {
+      const { data: sessionData } = await axios.get(`${API}/api/session`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
-      console.log("Session data:", data);
+      this.currentUser = sessionData.user; // { id, username, email }
 
-      const usersResponse = await axios.get(`${API}/api/users`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
+      // Connect socket once we know the user
+      getSocket();
+
+      const { data: usersData } = await axios.get(`${API}/api/users`, {
+        headers: { Authorization: `Bearer ${getToken()}` },
       });
 
-      this.users = usersResponse.data.users.map((user) => ({
+      this.users = usersData.users.map((user) => ({
         id: user.id,
         name: user.username,
         msg: user.email,
         designation: "User",
         profile:
-          "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bc01c83c3da0425e9baa6c7a9204af81",
+          "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&s=bc01c83c3da0425e9baa6c7a9204af81",
       }));
     } catch (err) {
       this.$router.push("/login");
     }
   },
+
   methods: {
     selectUser(user) {
       this.selectedUser = user;
@@ -110,9 +114,8 @@ export default {
   border: 1px solid black;
   overflow: hidden;
 }
-
 .sidebar-panel {
-  height: 95vh; 
+  height: 95vh;
   border: 1px solid black;
   overflow-y: auto;
   overflow-x: hidden;
