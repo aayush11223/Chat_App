@@ -1,82 +1,81 @@
 <template>
-  <div
-    id="universe_div"
-    class="d-flex justify-center align-center"
-    style="height: 100vh; width: 100%"
-  >
-    <v-card
-      style="
-        border-radius: 10px;
-        width: 387px;
-        color: white;
-        background-color: rgba(30, 58, 138, 0.2);
-        backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
-      "
-      id="page"
-      class="d-flex flex-column justify-center pa-10"
-      dark
-      flat
-      height="500"
+  <v-app>
+    <div
+      id="universe_div"
+      class="d-flex justify-center align-center"
+      style="height: 100vh; width: 100%"
     >
-      <h2 class="mb-4 white--text">Log In</h2>
-      <br />
-
-      <v-text-field
-        v-model="username"
-        autocomplete="off"
-        placeholder="Enter your username"
-        dense
-        class="mb-1"
-      />
-
-      <v-text-field
-        v-model="password"
-        autocomplete="new-password"
-        placeholder="Enter your password"
-        type="password"
-        dense
-        class="mb-4"
-      />
-
-      <v-btn
-        id="login-btn"
-        block
+      <v-card
         style="
-          background-color: rgb(10, 10, 141);
+          border-radius: 10px;
           color: white;
-          border: none;
-          height: 1px;
+          background-color: rgba(30, 58, 138, 0.2);
+          backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
         "
-        @click="login"
+        id="page"
+        class="d-flex flex-column justify-center pa-10"
+        dark
+        flat
+        height="500"
+        :width="$vuetify.breakpoint.xs ? '90%' : '387px'"
       >
-        Log In
-      </v-btn>
+        <h2 class="mb-4 white--text">Log In</h2>
+        <br />
 
-      <br />
+        <v-text-field
+          v-model="username"
+          autocomplete="off"
+          placeholder="Enter your username"
+          dense
+          class="mb-1"
+        />
 
-      <p
-        class="text-center mb-3"
-        style="font-size: 0.8rem; color: white; align-self: center"
-      >
-        Don't have an account? Create one
-      </p>
+        <v-text-field
+          v-model="password"
+          autocomplete="new-password"
+          placeholder="Enter your password"
+          type="password"
+          dense
+          class="mb-4"
+        />
 
-      <router-link to="/signup" class="text-decoration-none mb-2">
         <v-btn
-          id="signup-btn"
+          id="login-btn"
           block
+          height="42px"
           style="
-            background-color: rgb(0, 31, 68);
+            background-color: rgb(10, 10, 141);
             color: white;
             border: none;
-            height: 42px;
+            flex: 0 0 auto;
           "
+          @click="login"
         >
-          Sign Up
+          Log In
         </v-btn>
-      </router-link>
-    </v-card>
-  </div>
+
+        <br />
+
+        <p
+          class="text-center mb-3"
+          style="font-size: 0.8rem; color: white; align-self: center"
+        >
+          Don't have an account? Create one
+        </p>
+
+        <router-link to="/signup" class="text-decoration-none mb-2">
+          <v-btn
+            id="signup-btn"
+            block
+            height="42px"
+            style="background-color: rgb(0, 31, 68); color: white; border: none"
+          >
+            Sign Up
+          </v-btn>
+        </router-link>
+      </v-card>
+    </div>
+  </v-app>
 </template>
 
 <script>

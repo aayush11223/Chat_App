@@ -1,97 +1,93 @@
 <template>
-  <div
-    id="universe_div"
-    class="d-flex justify-center align-center"
-    style="height: 100vh; width: 100%"
-  >
-    <v-card
-      id="page"
-      style="
-        border-radius: 10px;
-        width: 387px;
-        color: white;
-        background-color: rgba(30, 58, 138, 0.2);
-        backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
-      "
-      class="d-flex flex-column justify-center pa-10"
-      dark
-      flat
-      height="500"
+  <v-app>
+    <div
+      id="universe_div"
+      class="d-flex justify-center align-center"
+      style="height: 100vh; width: 100%"
     >
-      <h2 class="mb-4 white--text">Sign Up</h2>
-      <br />
-
-      <v-text-field
-        v-model="username"
-        autocomplete="off"
-        placeholder="Enter your username"
-        dense
-        class="mb-1"
-      />
-
-      <v-text-field
-        v-model="email"
-        autocomplete="off"
-        placeholder="Enter your email"
-        dense
-        class="mb-1"
-      />
-
-      <v-text-field
-        v-model="password"
-        autocomplete="new-password"
-        placeholder="Enter your password"
-        type="password"
-        dense
-        class="mb-4"
-      />
-
-      <v-btn
-        id="signup-btn"
-        block
+      <v-card
+        id="page"
         style="
-          background-color: rgb(10, 10, 141);
+          border-radius: 10px;
           color: white;
-          border: none;
-          height: 25px;
-          background-color: rgb(22, 31, 68);
-          color: white;
-          border: none;
+          background-color: rgba(30, 58, 138, 0.2);
+          backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
         "
-        @click="signup"
+        class="d-flex flex-column justify-center pa-10"
+        dark
+        flat
+        height="500"
+        :width="$vuetify.breakpoint.xs ? '90%' : '387px'"
       >
-        sign up
-      </v-btn>
-      <br />
+        <h2 class="mb-4 white--text">Sign Up</h2>
+        <br />
 
-      <p
-        class="text-center mb-3"
-        style="
-          font-size: 0.8rem;
-          color: white;
-          align-self: center;
-          height: 10px;
-        "
-      >
-        Already have an account
-      </p>
+        <v-text-field
+          v-model="username"
+          autocomplete="off"
+          placeholder="Enter your username"
+          dense
+          class="mb-1"
+        />
 
-      <router-link to="/login" class="text-decoration-none mb-2">
+        <v-text-field
+          v-model="email"
+          autocomplete="off"
+          placeholder="Enter your email"
+          dense
+          class="mb-1"
+        />
+
+        <v-text-field
+          v-model="password"
+          autocomplete="new-password"
+          placeholder="Enter your password"
+          type="password"
+          dense
+          class="mb-4"
+        />
+
         <v-btn
-          id="login-btn"
+          id="signup-btn"
           block
+          height="42px"
           style="
-            background-color: rgb(10, 10, 141);
+            background-color: rgb(22, 31, 68);
             color: white;
             border: none;
-            height: 42px;
+            flex: 0 0 auto;
           "
+          @click="signup"
         >
-          log in
+          Sign Up
         </v-btn>
-      </router-link>
-    </v-card>
-  </div>
+
+        <br />
+
+        <p
+          class="text-center mb-3"
+          style="font-size: 0.8rem; color: white; align-self: center"
+        >
+          Already have an account?
+        </p>
+
+        <router-link to="/login" class="text-decoration-none mb-2">
+          <v-btn
+            id="login-btn"
+            block
+            height="42px"
+            style="
+              background-color: rgb(10, 10, 141);
+              color: white;
+              border: none;
+            "
+          >
+            Log In
+          </v-btn>
+        </router-link>
+      </v-card>
+    </div>
+  </v-app>
 </template>
 
 <script>
