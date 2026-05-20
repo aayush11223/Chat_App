@@ -79,7 +79,11 @@ export default {
   methods: {
     handleSelection(user) {
       this.$emit("select-user", user);
-      this.$router.push(`/chatpage/${user.id}`);
+      this.$router.push(`/chatpage/${user.id}`).catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
+          console.error(err);
+        }
+      });
     },
     logout() {
       clearToken();
