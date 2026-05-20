@@ -108,7 +108,7 @@ export default {
     };
   },
   methods: {
-    async signup() {
+    signup() {
       if (!this.username || !this.email || !this.password) {
         alert("Please fill all fields");
         return;
@@ -116,31 +116,33 @@ export default {
 
       this.loading = true;
 
-      try {
-        await axios.post(`${API}/api/auth/register`, {
+      axios
+        .post(`${API}/api/auth/register`, {
           username: this.username,
           email: this.email,
           password: this.password,
+        })
+        .then(() => {
+          this.username = "";
+          this.email = "";
+          this.password = "";
+
+          alert("Registration successful");
+
+          this.$router.push("/login");
+        })
+        .catch((err) => {
+          const msg =
+            err.response?.data?.error ||
+            err.response?.data?.message ||
+            JSON.stringify(err.response?.data) ||
+            "Registration failed";
+
+          alert(msg);
+        })
+        .finally(() => {
+          this.loading = false;
         });
-
-        this.username = "";
-        this.email = "";
-        this.password = "";
-
-        alert("Registration successful");
-
-        this.$router.push("/login");
-      } catch (err) {
-        const msg =
-          err.response?.data?.error ||
-          err.response?.data?.message ||
-          JSON.stringify(err.response?.data) ||
-          "Registration failed";
-
-        alert(msg);
-      } finally {
-        this.loading = false;
-      }
     },
   },
 };

@@ -95,7 +95,7 @@ export default {
     };
   },
   methods: {
-    async login() {
+    login() {
       if (!this.username || !this.password) {
         alert("Please fill all fields");
         return;
@@ -103,28 +103,30 @@ export default {
 
       this.loading = true;
 
-      try {
-        const { data } = await axios.post(`${API}/api/auth/login`, {
+      axios
+        .post(`${API}/api/auth/login`, {
           usernameOrEmail: this.username,
           password: this.password,
+        })
+        .then(({ data }) => {
+          setToken(data.token);
+
+          this.username = "";
+          this.password = "";
+
+          this.$router.push("/chatpage");
+        })
+        .catch((err) => {
+          const msg =
+            err.response?.data?.error ||
+            err.response?.data?.message ||
+            "Invalid username or password";
+
+          alert(msg);
+        })
+        .finally(() => {
+          this.loading = false;
         });
-
-        setToken(data.token);
-
-        this.username = "";
-        this.password = "";
-
-        this.$router.push("/chatpage");
-      } catch (err) {
-        const msg =
-          err.response?.data?.error ||
-          err.response?.data?.message ||
-          "Invalid username or password";
-
-        alert(msg);
-      } finally {
-        this.loading = false;
-      }
     },
   },
 };
