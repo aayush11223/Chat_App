@@ -63,35 +63,38 @@ export default {
     };
   },
 
-  async created() {
+  created() {
     if (!isLoggedIn()) {
       this.$router.push("/login");
       return;
     }
-    try {
-      const { data: sessionData } = await axios.get(`${API}/api/session`, {
+
+    axios
+      .get(`${API}/api/session`, {
         headers: { Authorization: `Bearer ${getToken()}` },
+      })
+      .then((sessionRes) => {
+        this.currentUser = sessionRes.data.user;
+
+        getSocket();
+
+        return axios.get(`${API}/api/users`, {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
+      })
+      .then((usersRes) => {
+        this.users = usersRes.data.users.map((user) => ({
+          id: user.id,
+          name: user.username,
+          msg: user.email,
+          designation: "User",
+          profile:
+            "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&s=bc01c83c3da0425e9baa6c7a9204af81",
+        }));
+      })
+      .catch(() => {
+        this.$router.push("/login");
       });
-      this.currentUser = sessionData.user; // { id, username, email }
-
-      // Connect socket once we know the user
-      getSocket();
-
-      const { data: usersData } = await axios.get(`${API}/api/users`, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
-
-      this.users = usersData.users.map((user) => ({
-        id: user.id,
-        name: user.username,
-        msg: user.email,
-        designation: "User",
-        profile:
-          "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&s=bc01c83c3da0425e9baa6c7a9204af81",
-      }));
-    } catch (err) {
-      this.$router.push("/login");
-    }
   },
 
   methods: {
