@@ -16,7 +16,10 @@ const routes = [
         path: "/login",
         name: "login",
         component: LogIn,
-        meta: { requiresGuest: true },
+        meta: { requiresGuest: true }, //meta is used ot add custome properties in route
+
+        //  Only allow users who are NOT logged in”
+        // If logged in, they should not access login page.
     },
 
     {
@@ -32,6 +35,8 @@ const routes = [
         component: ChatPage,
         meta: { requiresAuth: true },
     },
+    // This route requires authentication
+    // Only logged-in users can access it
 ];
 
 const router = new VueRouter({
@@ -45,9 +50,13 @@ router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !loggedIn) {
         return next("/login");
     }
+    // If route requires authentication AND user is NOT logged in
+    // redirect to /login
 
     if (to.meta.requiresGuest && loggedIn) {
         return next("/chatpage");
+        // If route is only for guests (login/signup) AND user IS logged in
+        // redirect to chat page
     }
 
     next();
