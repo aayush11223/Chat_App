@@ -1,9 +1,9 @@
 <template>
-  <v-container fluid class="pa-0 ma-0 d-flex flex-column" style="height: 90vh">
+  <v-container fluid class="pa-0 ma-0 d-flex flex-column" style="height: 100%">
     <v-card
-      height="300"
       flat
       class="pl-4 d-flex align-center"
+      min-height="70"
       style="
         cursor: pointer;
         border-bottom: 1px solid #e1e1e133;
@@ -21,16 +21,14 @@
     <!-- Messages -->
     <div
       ref="messageContainer"
-      style="overflow-y: auto; flex-grow: 1"
+      style="overflow-y: auto; flex-grow: 1; min-height: 0"
       class="pa-0"
     >
       <div
         v-if="loading"
         class="d-flex justify-center align-center"
         style="height: 100%"
-      >
-        <v-progress-circular indeterminate color="primary" />
-      </div>
+      ></div>
 
       <div
         v-for="(msg, index) in messages"
@@ -41,7 +39,7 @@
         ]"
       >
         <div
-          class="message-bubble py-2 px-3 my-1 mx-3"
+          class="message-bubble py-2 px-3 my-1 mx-3 white--text"
           style="border-radius: 8px; max-width: 60%"
           :class="
             msg.senderId === currentUser.id ? 'bubble-sent' : 'bubble-received'
@@ -53,36 +51,39 @@
     </div>
 
     <!-- Input -->
-    <v-footer
-      class="d-flex align-center px-4"
+    <v-card
+      height="70"
+      class="d-flex align-center justify-center px-4"
       style="
-        border-top: 1px solid #dcdcdc;
-        height: 80px;
-        background-color: white;
         flex-shrink: 0;
+        border-top: 1px solid #e1e1e133;
+        background: transparent;
       "
     >
       <v-responsive max-width="80%">
         <v-text-field
-          class="ml-16 mt-7"
+          class="ml-16"
           @keypress.enter="sendMessage"
           v-model="userInput"
           placeholder="Type something..."
           outlined
           dense
           hide-details
+          dark
+          color="white"
+          style="border: 1px solid white"
         />
       </v-responsive>
       <v-btn
         @click="sendMessage"
         depressed
-        class="ml-12 mt-6"
+        class="ml-5"
         fab
-        style="border: 1px solid black; width: 40px; height: 40px"
+        style="border: 1px solid white; width: 40px; height: 40px"
       >
         <v-icon>mdi-send</v-icon>
       </v-btn>
-    </v-footer>
+    </v-card>
   </v-container>
 </template>
 
@@ -241,12 +242,12 @@ export default {
 
    <style scoped>
 .bubble-sent {
-  background-color: #d1e7dd;
+  background-color: #060014;
   border-bottom-right-radius: 0 !important;
 }
 .bubble-received {
-  background-color: #f8f9fa;
+  background-color: #680079;
   border-bottom-left-radius: 0 !important;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #680079;
 }
 </style>

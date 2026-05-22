@@ -6,7 +6,7 @@
         <div
           class="ma-3 rounded-lg"
           style="
-            height: 90vh;
+            height: 87vh;
             border: 1px solid #e1e1e180;
             overflow-y: auto;
             overflow-x: hidden;
@@ -110,9 +110,11 @@ export default {
 
 <style scoped>
 .panel {
-  min-height: 90vh;
+  height: 87vh;
   border: 1px solid #e1e1e180;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .background-image {

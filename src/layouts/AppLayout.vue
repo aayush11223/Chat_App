@@ -1,4 +1,4 @@
-<template>
+<template >
   <v-app>
     <NavBar :currentUser="currentUser" />
     <v-main>
@@ -46,3 +46,4 @@ export default {
   },
 };
 </script>
+

@@ -11,11 +11,11 @@
         </v-avatar>
       </div>
 
-      <div class="d-flex flex-column align-center text-center">
+      <div class="d-flex flex-column align-center text-center white--text">
         <span style="font-size: 20px; font-weight: 600">{{
           selectedUser.name
         }}</span>
-        <span style="font-size: 20px; color: #888">{{
+        <span style="font-size: 20px; color: #e1e1e180">{{
           selectedUser.designation
         }}</span>
       </div>
