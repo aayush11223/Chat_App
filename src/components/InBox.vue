@@ -1,33 +1,23 @@
 <template>
-  <v-container
-    fluid
-    class="pa-0 ma-0 d-flex flex-column"
-    style="height: 90vh; width: 100%"
-  >
-    <!-- Header -->
+  <v-container fluid class="pa-0 ma-0 d-flex flex-column" style="height: 90vh">
     <v-card
+      height="180"
       flat
-      class="mx-auto rounded-0"
-      style="width: 100%; height: 80px; flex-shrink: 0"
+      class="pl-4 d-flex align-center"
+      style="
+        cursor: pointer;
+        border-bottom: 1px solid #e1e1e133;
+        background: transparent;
+      "
     >
-      <div
-        class="d-flex align-center px-3"
-        style="height: 100%; gap: 12px; border-bottom: 1px solid #dcdcdc"
-      >
-        <v-avatar size="38" @click="$emit('change-col')">
-          <v-img :src="selectedUser.profile" :alt="selectedUser.name" />
-        </v-avatar>
-        <div class="d-flex flex-column justify-center">
-          <span style="font-size: 14px; font-weight: 600">{{
-            selectedUser.name
-          }}</span>
-          <span style="font-size: 12px; color: #888">{{
-            selectedUser.designation
-          }}</span>
-        </div>
-      </div>
-    </v-card>
+      <v-avatar size="38" class="mr-3" @click="$emit('change-col')">
+        <v-img :src="selectedUser.profile" :alt="selectedUser.name" />
+      </v-avatar>
 
+      <span class="text-body-2 font-weight-bold white--text">
+        {{ selectedUser.name }}
+      </span>
+    </v-card>
     <!-- Messages -->
     <div
       ref="messageContainer"

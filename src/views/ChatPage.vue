@@ -1,14 +1,22 @@
 <template>
   <v-app>
     <v-main>
-      <v-container fill-height fluid class="pa-0">
+      <v-container fill-height fluid class="pa-0 background-image">
         <v-row no-gutters class="chat-layout">
           <v-col
             cols="12"
             :sm="selectedUser ? 4 : 12"
             :md="selectedUser ? 3 : 12"
           >
-            <div class="sidebar-panel ma-3 rounded-lg">
+            <div
+              class="ma-3 rounded-lg"
+              style="
+                height: 95vh;
+                border: 1px solid #e1e1e180;
+                overflow-y: auto;
+                overflow-x: hidden;
+              "
+            >
               <SideBar :users="users" @select-user="selectUser" />
             </div>
           </v-col>
@@ -114,13 +122,14 @@ export default {
 <style scoped>
 .panel {
   min-height: 95vh;
-  border: 1px solid black;
+  border: 1px solid #e1e1e180;
   overflow: hidden;
 }
-.sidebar-panel {
-  height: 95vh;
-  border: 1px solid black;
-  overflow-y: auto;
-  overflow-x: hidden;
+
+.background-image {
+  background-image: url("../assets/signup.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 </style>

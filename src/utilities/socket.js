@@ -13,7 +13,7 @@ export function getSocket() {
             // process.env.VUE_APP_LINK is your backend URL
 
             auth: { token: getToken() },
-            // Sends authentication data during connection
+            // Sends authentication data during connection, backend must know who is connecting, so we send token
         });
     }
     return socket;
