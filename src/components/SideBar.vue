@@ -11,15 +11,6 @@
           </v-avatar>
           <h3 class="pt-2 pl-3 white--text">Chat</h3>
         </div>
-        <v-btn
-          depressed
-          width="80"
-          color="#9D76C1"
-          class="mt-3 mr-3 white--text"
-          @click="logout"
-        >
-          Log Out
-        </v-btn>
       </div>
 
       <v-text-field
@@ -64,8 +55,9 @@
 </template>
 
 <script>
-import { clearToken } from "../utilities/token.js";
 export default {
+  name: "SideBar",
+
   props: {
     users: Array,
   },
@@ -79,17 +71,6 @@ export default {
         }
       });
     },
-    logout() {
-      clearToken();
-      this.$router.replace("/login").catch(() => {});
-    },
   },
 };
 </script>
-
-<style scoped>
-</style>
-
-
-
-

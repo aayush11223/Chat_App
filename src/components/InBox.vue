@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pa-0 ma-0 d-flex flex-column" style="height: 90vh">
     <v-card
-      height="180"
+      height="300"
       flat
       class="pl-4 d-flex align-center"
       style="

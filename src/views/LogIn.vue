@@ -1,81 +1,79 @@
 <template>
-  <v-app>
-    <div
-      id="universe_div"
-      class="d-flex justify-center align-center"
-      style="height: 100vh; width: 100%"
+  <div
+    id="universe_div"
+    class="d-flex justify-center align-center"
+    style="height: 100vh; width: 100%"
+  >
+    <v-card
+      style="
+        border-radius: 10px;
+        color: white;
+        background-color: rgba(30, 58, 138, 0.2);
+        backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
+      "
+      id="page"
+      class="d-flex flex-column justify-center pa-10"
+      dark
+      flat
+      height="500"
+      :width="$vuetify.breakpoint.xs ? '90%' : '387px'"
     >
-      <v-card
+      <h2 class="mb-4 white--text">Log In</h2>
+      <br />
+
+      <v-text-field
+        v-model="username"
+        autocomplete="off"
+        placeholder="Enter your username"
+        dense
+        class="mb-1"
+      />
+
+      <v-text-field
+        v-model="password"
+        autocomplete="new-password"
+        placeholder="Enter your password"
+        type="password"
+        dense
+        class="mb-4"
+      />
+
+      <v-btn
+        id="login-btn"
+        block
+        height="42px"
         style="
-          border-radius: 10px;
+          background-color: rgb(10, 10, 141);
           color: white;
-          background-color: rgba(30, 58, 138, 0.2);
-          backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
+          border: none;
+          flex: 0 0 auto;
         "
-        id="page"
-        class="d-flex flex-column justify-center pa-10"
-        dark
-        flat
-        height="500"
-        :width="$vuetify.breakpoint.xs ? '90%' : '387px'"
+        @click="login"
       >
-        <h2 class="mb-4 white--text">Log In</h2>
-        <br />
+        Log In
+      </v-btn>
 
-        <v-text-field
-          v-model="username"
-          autocomplete="off"
-          placeholder="Enter your username"
-          dense
-          class="mb-1"
-        />
+      <br />
 
-        <v-text-field
-          v-model="password"
-          autocomplete="new-password"
-          placeholder="Enter your password"
-          type="password"
-          dense
-          class="mb-4"
-        />
+      <p
+        class="text-center mb-3"
+        style="font-size: 0.8rem; color: white; align-self: center"
+      >
+        Don't have an account? Create one
+      </p>
 
+      <router-link to="/signup" class="text-decoration-none mb-2">
         <v-btn
-          id="login-btn"
+          id="signup-btn"
           block
           height="42px"
-          style="
-            background-color: rgb(10, 10, 141);
-            color: white;
-            border: none;
-            flex: 0 0 auto;
-          "
-          @click="login"
+          style="background-color: rgb(0, 31, 68); color: white; border: none"
         >
-          Log In
+          Sign Up
         </v-btn>
-
-        <br />
-
-        <p
-          class="text-center mb-3"
-          style="font-size: 0.8rem; color: white; align-self: center"
-        >
-          Don't have an account? Create one
-        </p>
-
-        <router-link to="/signup" class="text-decoration-none mb-2">
-          <v-btn
-            id="signup-btn"
-            block
-            height="42px"
-            style="background-color: rgb(0, 31, 68); color: white; border: none"
-          >
-            Sign Up
-          </v-btn>
-        </router-link>
-      </v-card>
-    </div>
-  </v-app>
+      </router-link>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -109,10 +107,8 @@ export default {
         })
         .then(({ data }) => {
           setToken(data.token);
-
           this.username = "";
           this.password = "";
-
           this.$router.push("/chatpage");
         })
         .catch((err) => {
@@ -120,7 +116,6 @@ export default {
             err.response?.data?.error ||
             err.response?.data?.message ||
             "Invalid username or password";
-
           alert(msg);
         })
         .finally(() => {
@@ -130,6 +125,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 #universe_div {
   background-image: url("../assets/LoginBackground.jpg");

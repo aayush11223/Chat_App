@@ -1,99 +1,94 @@
 <template>
-  <v-app>
-    <div
-      id="universe_div"
-      class="d-flex justify-center align-center"
-      style="height: 100vh; width: 100%"
+  <div
+    id="universe_div"
+    class="d-flex justify-center align-center"
+    style="height: 100vh; width: 100%"
+  >
+    <v-card
+      id="page"
+      style="
+        border-radius: 10px;
+        color: white;
+        background-color: rgba(30, 58, 138, 0.2);
+        backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
+      "
+      class="d-flex flex-column justify-center pa-10"
+      dark
+      flat
+      height="500"
+      :width="$vuetify.breakpoint.xs ? '90%' : '387px'"
     >
-      <v-card
-        id="page"
+      <h2 class="mb-4 white--text">Sign Up</h2>
+      <br />
+
+      <v-text-field
+        v-model="username"
+        autocomplete="off"
+        placeholder="Enter your username"
+        dense
+        class="mb-1"
+      />
+
+      <v-text-field
+        v-model="email"
+        autocomplete="off"
+        placeholder="Enter your email"
+        dense
+        class="mb-1"
+      />
+
+      <v-text-field
+        v-model="password"
+        autocomplete="new-password"
+        placeholder="Enter your password"
+        type="password"
+        dense
+        class="mb-4"
+      />
+
+      <v-btn
+        id="signup-btn"
+        block
+        height="42px"
         style="
-          border-radius: 10px;
+          background-color: rgb(22, 31, 68);
           color: white;
-          background-color: rgba(30, 58, 138, 0.2);
-          backdrop-filter: blur(4px) brightness(0.83) contrast(89%);
+          border: none;
+          flex: 0 0 auto;
         "
-        class="d-flex flex-column justify-center pa-10"
-        dark
-        flat
-        height="500"
-        :width="$vuetify.breakpoint.xs ? '90%' : '387px'"
+        @click="signup"
       >
-        <h2 class="mb-4 white--text">Sign Up</h2>
-        <br />
+        Sign Up
+      </v-btn>
 
-        <v-text-field
-          v-model="username"
-          autocomplete="off"
-          placeholder="Enter your username"
-          dense
-          class="mb-1"
-        />
+      <br />
 
-        <v-text-field
-          v-model="email"
-          autocomplete="off"
-          placeholder="Enter your email"
-          dense
-          class="mb-1"
-        />
+      <p
+        class="text-center mb-3"
+        style="font-size: 0.8rem; color: white; align-self: center"
+      >
+        Already have an account?
+      </p>
 
-        <v-text-field
-          v-model="password"
-          autocomplete="new-password"
-          placeholder="Enter your password"
-          type="password"
-          dense
-          class="mb-4"
-        />
-
+      <router-link to="/login" class="text-decoration-none mb-2">
         <v-btn
-          id="signup-btn"
+          id="login-btn"
           block
           height="42px"
-          style="
-            background-color: rgb(22, 31, 68);
-            color: white;
-            border: none;
-            flex: 0 0 auto;
-          "
-          @click="signup"
+          style="background-color: rgb(10, 10, 141); color: white; border: none"
         >
-          Sign Up
+          Log In
         </v-btn>
-
-        <br />
-
-        <p
-          class="text-center mb-3"
-          style="font-size: 0.8rem; color: white; align-self: center"
-        >
-          Already have an account?
-        </p>
-
-        <router-link to="/login" class="text-decoration-none mb-2">
-          <v-btn
-            id="login-btn"
-            block
-            height="42px"
-            style="
-              background-color: rgb(10, 10, 141);
-              color: white;
-              border: none;
-            "
-          >
-            Log In
-          </v-btn>
-        </router-link>
-      </v-card>
-    </div>
-  </v-app>
+      </router-link>
+    </v-card>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 
 const API = process.env.VUE_APP_LINK;
+
 export default {
   data() {
     return {
@@ -122,9 +117,7 @@ export default {
           this.username = "";
           this.email = "";
           this.password = "";
-
           alert("Registration successful");
-
           this.$router.push("/login");
         })
         .catch((err) => {
@@ -133,7 +126,6 @@ export default {
             err.response?.data?.message ||
             JSON.stringify(err.response?.data) ||
             "Registration failed";
-
           alert(msg);
         })
         .finally(() => {
@@ -143,6 +135,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 #universe_div {
   background-image: url("../assets/signup.jpg");
